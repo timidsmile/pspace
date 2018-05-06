@@ -1,0 +1,15 @@
+{
+  "pspaceDb": {
+    "debug": "true",
+    "host" : "127.0.0.1",
+    "port" : "3306",
+    "user" : "root",
+    "pwd" : "",
+    "dbname" : "pspace"
+  },
+  "redis": {
+    "Host" : "127.0.0.1",
+    "Cluster": "redis_ad_dev",
+    "Port" : "3708"
+  }
+}
