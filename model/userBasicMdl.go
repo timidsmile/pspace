@@ -1,15 +1,15 @@
 package model
 
-type User struct {
+type UserBasic struct {
 	BasicMdl
 	UserID              string `gorm:"size:32 column:user_id" json:"userID"`
 	UserName              string `gorm:"size:32 column:user_name" json:"userName"`
-	mobile              string `gorm:"size:32" json:"mobile"`
-	email              string `gorm:"size:32" json:"email"`
-	passwd              string `gorm:"size:32" json:"passwd"`
-	Nickname          string `gorm:"size:32" json:"nickname"`
-	AvatarURL         string `gorm:"size:255" json:"avatarURL"`
-	status         int8 `gorm:"size:255" json:"status"`
+	Mobile              string `gorm:"size:32" json:"mobile"`
+	Email              string `gorm:"size:32" json:"email"`
+	Passwd              string `gorm:"size:32" json:"passwd"`
+	NickName          string `gorm:"size:32" json:"nickname"`
+	AvataUrl         string `gorm:"size:255" json:"avatarURL"` // TODO: AvatarUrl
+	Status         int8 `gorm:"size:255" json:"status"`
 
 }
 
@@ -28,3 +28,6 @@ type User struct {
  */
 
 
+func (UserBasic) TableName() string {
+	return "user_basic"
+}

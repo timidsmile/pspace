@@ -21,13 +21,13 @@ func InitDb(cfg *setting.Config) error {
 	var err error
 	dbCfg := dsn(cfg.PspaceDb)
 
+	fmt.Println(dbCfg)
+
 	if Db, err = gorm.Open("mysql", dbCfg); err != nil {
 		return err
 	}
 
-	if cfg.Debug {
-		Db.LogMode(true)
-	}
+	Db.LogMode(true)
 
 	return nil
 }
