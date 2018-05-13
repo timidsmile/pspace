@@ -2,17 +2,15 @@ package setting
 
 import (
 	"fmt"
+	"github.com/BurntSushi/toml"
 	"path/filepath"
 	"sync"
-	"github.com/BurntSushi/toml"
 )
-
 
 var (
-	Cfg * Config
+	Cfg  *Config
 	once sync.Once
 )
-
 
 type DbConfig struct {
 	Host string
@@ -24,9 +22,8 @@ type DbConfig struct {
 
 type Config struct {
 	Debug    bool
-	PspaceDb       DbConfig
+	PspaceDb DbConfig
 }
-
 
 func init() {
 	ReadConfig()
@@ -39,11 +36,10 @@ func ReadConfig() *Config {
 			panic(err)
 		}
 		fmt.Printf("parse toml file once. filePath: %s\n", filePath)
-		if _ , err := toml.DecodeFile(filePath, &Cfg); err != nil {
+		if _, err := toml.DecodeFile(filePath, &Cfg); err != nil {
 			panic(err)
 		}
 	})
 
-	return nil;
+	return nil
 }
-

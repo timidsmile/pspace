@@ -1,12 +1,12 @@
 package router
 
 import (
-	"github.com/timidsmile/pspace/action/test"
-	"github.com/timidsmile/pspace/action/session"
 	"github.com/gin-gonic/gin"
+	"github.com/timidsmile/pspace/action/session"
+	"github.com/timidsmile/pspace/action/test"
 )
 
-func LoadRouters() *gin.Engine{
+func LoadRouters() *gin.Engine {
 
 	router := gin.New()
 	router.Use(gin.Recovery())
@@ -16,14 +16,15 @@ func LoadRouters() *gin.Engine{
 	{
 		testGroup.GET("/welcome", test.WelcomeAction)
 		testGroup.GET("/goodbye", test.GoodbyeAction)
+		testGroup.GET("/testdb", test.TestdbAction)
 	}
 
 	// session 模块
 	sessions := router.Group("/session")
 	{
-		sessions.GET("/register", session.RegisterAction)
-		sessions.GET("/login", session.LoginAction)
+		sessions.POST("/register", session.RegisterAction)
+		sessions.POST("/login", session.LoginAction)
 	}
 
-	return router;
+	return router
 }
