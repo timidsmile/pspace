@@ -18,18 +18,9 @@ func (s *UserBasicService) RegisterByEmail(email string, passwd string, userID i
 		Msg:"ok",
 	}
 
-	users, err := s.GetByEmail(email)
-	if(err != nil) {
-		fmt.Println("iiii");
-
-		response.Code = 3333;
-		response.Msg = "服务器繁忙，请稍后重试!";
-		return response;
-	}
+	users := s.GetByEmail(email)
 
 	if(users != nil) {
-		fmt.Println("xxxxx");
-
 		response.Code = 222;
 		response.Msg = "该手机号已注册!";
 		return response;
@@ -52,16 +43,11 @@ func (s *UserBasicService) RegisterByEmail(email string, passwd string, userID i
 
 func (s *UserBasicService) RegisterByMobile(mobile string, passwd string, userID int64)  components.Response {
 	// check 该用户是否已经注册过
-	users, err := s.GetByEmail(mobile)
+	users := s.GetByEmail(mobile)
 
 	response := components.Response{
 		Code:0,
 		Msg:"ok",
-	}
-	if(err != nil) {
-		response.Code = 3333;
-		response.Msg = "服务器繁忙，请稍后重试!";
-		return response;
 	}
 
 	if(users != nil) {
@@ -110,22 +96,22 @@ func (srv *UserBasicService) GetByUserIds(userIds []string) *model.UserBasic {
 	return userBasic
 }
 
-func (srv *UserBasicService) GetByEmail(email string) (*model.UserBasic, error) {
+func (srv *UserBasicService) GetByEmail(email string) *model.UserBasic {
 	userBasic := &model.UserBasic{}
 	if err := components.Db.Where("`email` = ?", email).First(userBasic).Error; nil != err {
-		return nil, err
+		return nil
 	}
 
-	return userBasic, nil
+	return userBasic
 }
 
-func (srv *UserBasicService) GetByMobile(mobile string) (*model.UserBasic, error) {
+func (srv *UserBasicService) GetByMobile(mobile string) *model.UserBasic {
 	userBasic := &model.UserBasic{}
 	if err := components.Db.Where("`mobile` = ?", mobile).First(userBasic).Error; nil != err {
-		return nil, err
+		return nil
 	}
 
-	return userBasic, nil
+	return userBasic
 }
 
 

@@ -11,7 +11,7 @@ type Response struct {
 func (f *Response) NewResponse() *Response {
 	return &Response{
 		Code: 0,
-		Msg:  "",
+		Msg:  "ok",
 		Data: nil,
 	}
 }
