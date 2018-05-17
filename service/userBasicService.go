@@ -5,25 +5,20 @@ import (
 	"github.com/timidsmile/pspace/model"
 	"sync"
 	"fmt"
+	"errors"
 )
 
 type UserBasicService struct {
 	mutex *sync.Mutex
 }
 
-func (s *UserBasicService) RegisterByEmail(email string, passwd string, userID int64)  (components.Response) {
+func (s *UserBasicService) RegisterByEmail(email string, passwd string, userID int64)  error {
 	// check 该用户是否已经注册过
-	response := components.Response{
-		Code:0,
-		Msg:"ok",
-	}
 
 	users := s.GetByEmail(email)
 
 	if(users != nil) {
-		response.Code = 222;
-		response.Msg = "该手机号已注册!";
-		return response;
+		return errors.New("该用户已注册")
 	}
 
 	user := model.UserBasic{
@@ -38,22 +33,15 @@ func (s *UserBasicService) RegisterByEmail(email string, passwd string, userID i
 
 	s.CreateUser(&user)
 
-	return response;
+	return nil;
 }
 
-func (s *UserBasicService) RegisterByMobile(mobile string, passwd string, userID int64)  components.Response {
+func (s *UserBasicService) RegisterByMobile(mobile string, passwd string, userID int64) error {
 	// check 该用户是否已经注册过
 	users := s.GetByEmail(mobile)
 
-	response := components.Response{
-		Code:0,
-		Msg:"ok",
-	}
-
 	if(users != nil) {
-		response.Code = 222;
-		response.Msg = "该手机号已注册!";
-		return response;
+		return errors.New("该用户已注册")
 	}
 
 	user := model.UserBasic{
@@ -66,7 +54,7 @@ func (s *UserBasicService) RegisterByMobile(mobile string, passwd string, userID
 
 	s.CreateUser(&user)
 
-	return response;
+	return nil;
 }
 
 func (u *UserBasicService) CreateUser(user *model.UserBasic) error {

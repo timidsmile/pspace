@@ -7,10 +7,11 @@ import (
 	"github.com/timidsmile/pspace/service"
 	"github.com/timidsmile/pspace/components"
 	"github.com/timidsmile/pspace/consts"
+	"errors"
 )
 
 func RegisterAction(c *gin.Context) {
-	response := &components.Response{}
+	response := components.NewResponse()
 	defer c.JSON(http.StatusOK, response)
 
 	// 支持手机号和邮箱两种注册方式，注册后可以用唯一user_name登陆
@@ -38,7 +39,7 @@ func RegisterAction(c *gin.Context) {
 
 	ee := components.EmailValidate{}
 	mm := components.MobileValidate{}
-	if false == ee.Validate(email) || false == mm.Validate(mobile) {
+	if false == ee.Validate(email) && false == mm.Validate(mobile) {
 		response.Code = 9999;
 		response.Msg = "邮箱或手机号格式不正确!";
 		return;
@@ -63,15 +64,19 @@ func RegisterAction(c *gin.Context) {
 
 	userServ := service.UserBasicService{};
 
+	var err error
 	if(email != "") {
-		*response = userServ.RegisterByEmail(email, passwd, userID);
+		err = userServ.RegisterByEmail(email, passwd, userID);
 	} else if(mobile != "") {
-		*response = userServ.RegisterByMobile(mobile, passwd, userID);
+		err = userServ.RegisterByMobile(mobile, passwd, userID);
 	} else {
-		response.Msg = "仅支持邮箱或手机号注册!";
-		return;
+		err = errors.New("仅支持邮箱或手机号注册")
 	}
 
+	if err != nil {
+		response.Code = 1
+		response.Msg = err.Error()
+	}
 	return
 }
 

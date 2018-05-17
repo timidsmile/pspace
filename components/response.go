@@ -8,7 +8,7 @@ type Response struct {
 }
 
 // NewResult creates a result with Code=0, Msg="", Data=nil.
-func (f *Response) NewResponse() *Response {
+func NewResponse() *Response {
 	return &Response{
 		Code: 0,
 		Msg:  "ok",
