@@ -2,7 +2,7 @@ package model
 
 type UserBasic struct {
 	Basic
-	UserID    int64 `gorm:"index;column:user_id;" json:"userID"`
+	UserID    int64  `gorm:"index;column:user_id;" json:"userID"`
 	UserName  string `gorm:"index;size:32;column:user_name" json:"userName"`
 	Mobile    string `gorm:"index;size:11" json:"mobile"`
 	Email     string `gorm:"index;size:50" json:"email"`

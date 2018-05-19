@@ -15,4 +15,3 @@ func NewResponse() *Response {
 		Data: nil,
 	}
 }
-

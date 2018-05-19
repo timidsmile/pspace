@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	emailRegular = "^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$"
+	emailRegular  = "^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$"
 	mobileRegular = "^1[0-9]{10}$"
 )
 
@@ -21,9 +21,9 @@ type MobileValidate struct {
 	input interface{}
 }
 
-func (obj EmailValidate) Validate (email interface{}) (bool) {
+func (obj EmailValidate) Validate(email interface{}) bool {
 	emailStr, ok := email.(string)
-	result := false;
+	result := false
 	if ok == true {
 		reg := regexp.MustCompile(emailRegular)
 		result = reg.MatchString(emailStr)
@@ -31,10 +31,9 @@ func (obj EmailValidate) Validate (email interface{}) (bool) {
 	return result
 }
 
-
-func (obj MobileValidate) Validate (mobile interface{}) (bool) {
-	mobileStr,ok := mobile.(string)
-	result := false;
+func (obj MobileValidate) Validate(mobile interface{}) bool {
+	mobileStr, ok := mobile.(string)
+	result := false
 	if ok == true {
 		reg := regexp.MustCompile(mobileRegular)
 		result = reg.MatchString(mobileStr)

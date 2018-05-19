@@ -15,7 +15,7 @@ func LoginAction(c *gin.Context) {
 	}
 
 	s := service.UserBasicService{}
-	ret := s.GetByUserID("123")
+	ret := s.GetByUserID(123)
 
 	fmt.Println(ret)
 

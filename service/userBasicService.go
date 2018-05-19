@@ -1,60 +1,60 @@
 package service
 
 import (
+	"errors"
+	"fmt"
 	"github.com/timidsmile/pspace/components"
 	"github.com/timidsmile/pspace/model"
 	"sync"
-	"fmt"
-	"errors"
 )
 
 type UserBasicService struct {
 	mutex *sync.Mutex
 }
 
-func (s *UserBasicService) RegisterByEmail(email string, passwd string, userID int64)  error {
+func (s *UserBasicService) RegisterByEmail(email string, passwd string, userID int64) error {
 	// check 该用户是否已经注册过
 
 	users := s.GetByEmail(email)
 
-	if(users != nil) {
+	if users != nil {
 		return errors.New("该用户已注册")
 	}
 
 	user := model.UserBasic{
-		UserID:    userID,
-		UserName:  "",
-		Mobile:    "",
-		Email:     email,
-		Passwd:    passwd,
+		UserID:   userID,
+		UserName: "",
+		Mobile:   "",
+		Email:    email,
+		Passwd:   passwd,
 	}
 
-	fmt.Println("2222");
+	fmt.Println("2222")
 
 	s.CreateUser(&user)
 
-	return nil;
+	return nil
 }
 
 func (s *UserBasicService) RegisterByMobile(mobile string, passwd string, userID int64) error {
 	// check 该用户是否已经注册过
 	users := s.GetByEmail(mobile)
 
-	if(users != nil) {
+	if users != nil {
 		return errors.New("该用户已注册")
 	}
 
 	user := model.UserBasic{
-		UserID:    userID,
-		UserName:  "",
-		Mobile:    mobile,
-		Email:     "",
-		Passwd:    passwd,
+		UserID:   userID,
+		UserName: "",
+		Mobile:   mobile,
+		Email:    "",
+		Passwd:   passwd,
 	}
 
 	s.CreateUser(&user)
 
-	return nil;
+	return nil
 }
 
 func (u *UserBasicService) CreateUser(user *model.UserBasic) error {
@@ -63,7 +63,7 @@ func (u *UserBasicService) CreateUser(user *model.UserBasic) error {
 }
 
 // 根据userID查询userBasic信息
-func (srv *UserBasicService) GetByUserID(userID string) *model.UserBasic {
+func (srv *UserBasicService) GetByUserID(userID int64) *model.UserBasic {
 	userBasic := &model.UserBasic{}
 	if err := components.Db.Where("`user_id` = ?", userID).First(userBasic).Error; nil != err {
 
@@ -102,7 +102,6 @@ func (srv *UserBasicService) GetByMobile(mobile string) *model.UserBasic {
 	return userBasic
 }
 
-
 // 根据userName前缀匹配查询符合条件的所有记录
 func (srv *UserBasicService) GetByUserNamePrefix(userNamePreFix string) *model.UserBasic {
 	userBasic := &model.UserBasic{}
@@ -135,4 +134,17 @@ func (srv *UserBasicService) GetByID(userName string, email string, mobile strin
 	}
 
 	return userBasic
+}
+
+func (s *UserBasicService) UserSetting(basic model.UserBasic) error {
+	// check 该用户是否已经注册过
+
+	userID := basic.UserID
+	users := s.GetByUserID(userID)
+
+	if users == nil {
+		return errors.New("用户未注册！")
+	}
+
+	return nil
 }
