@@ -110,15 +110,15 @@ func (srv *UserBasicService) GetByID(userName string, email string, mobile strin
 	return userBasic
 }
 
-func (s *UserBasicService) UserSetting(basic model.UserBasic) error {
+func (s *UserBasicService) UserSetting(updateBasic model.UserBasic) error {
 	// check 该用户是否已经注册过
 
-	userID := basic.UserID
+	userID := updateBasic.UserID
 	users := s.GetByUserID(userID)
 
 	if users == nil {
 		return errors.New("用户未注册！")
 	}
 
-	return nil
+	return components.Db.Table(updateBasic.TableName()).Where("user_id = ?", userID).Updates(updateBasic).Error
 }

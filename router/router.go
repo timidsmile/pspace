@@ -2,6 +2,7 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/timidsmile/pspace/action/passport"
 	"github.com/timidsmile/pspace/action/session"
 	"github.com/timidsmile/pspace/action/test"
 )
@@ -20,10 +21,16 @@ func LoadRouters() *gin.Engine {
 	}
 
 	// session 模块
-	sessions := router.Group("/session")
+	sessionsGroup := router.Group("/session")
 	{
-		sessions.POST("/register", session.RegisterAction)
-		sessions.POST("/login", session.LoginAction)
+		sessionsGroup.POST("/register", session.RegisterAction)
+		sessionsGroup.POST("/login", session.LoginAction)
+	}
+
+	// passport 模块
+	passportGroup := router.Group("/passport")
+	{
+		passportGroup.POST("/setting", passport.SettingAction)
 	}
 
 	return router
