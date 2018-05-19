@@ -1,6 +1,7 @@
 package passport
 
 import (
+	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/timidsmile/pspace/components"
 	"github.com/timidsmile/pspace/model"
@@ -31,11 +32,14 @@ func SettingAction(c *gin.Context) {
 		return
 	}
 
-	err1 := json.Unmarshal(c, &model.UserBasic{})
-	if err1 != nil {
+	userBasic := model.UserBasic{
+		UserID:    params.UserID,
+		Email:     params.Email,
+		Mobile:    params.Mobile,
+		UserName:  params.Username,
+		NickName:  params.NickName,
+		AvatarUrl: params.AvatarUrl,
 	}
-
-	userBasic := model.UserBasic{}
 	userServ := service.UserBasicService{}
 	err := userServ.UserSetting(userBasic)
 

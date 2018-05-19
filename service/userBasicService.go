@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 	"github.com/timidsmile/pspace/components"
 	"github.com/timidsmile/pspace/model"
 	"sync"
@@ -12,49 +11,24 @@ type UserBasicService struct {
 	mutex *sync.Mutex
 }
 
-func (s *UserBasicService) RegisterByEmail(email string, passwd string, userID int64) error {
-	// check 该用户是否已经注册过
-
-	users := s.GetByEmail(email)
-
-	if users != nil {
+func (s *UserBasicService) Register(basic model.UserBasic) error {
+	// check 该用户是否已经注册过 & 用户ID是否重复
+	if hasUserName, hasUserID := s.GetByUserName(basic.UserName), s.GetByUserID(basic.UserID); hasUserName != nil || hasUserID != nil {
 		return errors.New("该用户已注册")
 	}
 
-	user := model.UserBasic{
-		UserID:   userID,
-		UserName: "",
-		Mobile:   "",
-		Email:    email,
-		Passwd:   passwd,
-	}
-
-	fmt.Println("2222")
-
-	s.CreateUser(&user)
+	s.CreateUser(&basic)
 
 	return nil
 }
 
-func (s *UserBasicService) RegisterByMobile(mobile string, passwd string, userID int64) error {
-	// check 该用户是否已经注册过
-	users := s.GetByEmail(mobile)
-
-	if users != nil {
-		return errors.New("该用户已注册")
+func (s *UserBasicService) GetByUserName(userName string) *model.UserBasic {
+	userBasic := &model.UserBasic{}
+	if err := components.Db.Where("`user_name` = ?", userName).First(userBasic).Error; nil != err {
+		return nil
 	}
 
-	user := model.UserBasic{
-		UserID:   userID,
-		UserName: "",
-		Mobile:   mobile,
-		Email:    "",
-		Passwd:   passwd,
-	}
-
-	s.CreateUser(&user)
-
-	return nil
+	return userBasic
 }
 
 func (u *UserBasicService) CreateUser(user *model.UserBasic) error {
