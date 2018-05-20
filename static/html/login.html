@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="login.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/login.css"/>
 </head>
 <body>
 <div id="login">
     <h1>圈子</h1>
     <h3>不是会员？找好友获得邀请码  </h3>
     <h3>会员？直接登陆： </h3>
-    <form method="post">
-        <input type="text" required="required" placeholder="用户名" name="u"></input>
-        <input type="password" required="required" placeholder="密码" name="p"></input>
+    <form method="post" action="/session/login">
+        <input type="text" required="required" placeholder="用户名" name="userName"></input>
+        <input type="password" required="required" placeholder="密码" name="passwd"></input>
         <button class="but" type="submit">登陆</button>
     </form>
 </div>

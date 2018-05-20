@@ -16,8 +16,10 @@ func LoadRouters() *gin.Engine {
 
 	router.HTMLRender = pongo2gin.New(
 		pongo2gin.RenderOptions{
-			TemplateDir: "./website/html/",
+			TemplateDir: "./static/html/",
 		})
+
+	router.Static("./static", "./static")
 
 	fmt.Println(router.HTMLRender)
 
