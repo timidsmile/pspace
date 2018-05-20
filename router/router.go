@@ -25,6 +25,7 @@ func LoadRouters() *gin.Engine {
 	{
 		sessionsGroup.POST("/register", session.RegisterAction)
 		sessionsGroup.POST("/login", session.LoginAction)
+		sessionsGroup.POST("/checkLogin", session.CheckLoginAction)
 	}
 
 	// passport 模块

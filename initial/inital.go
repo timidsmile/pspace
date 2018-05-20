@@ -8,3 +8,7 @@ import (
 func InitDb() error {
 	return components.InitDb(setting.Cfg)
 }
+
+func InitRedis() error {
+	return components.InitRedis(setting.Cfg)
+}

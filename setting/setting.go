@@ -20,9 +20,16 @@ type DbConfig struct {
 	Name string
 }
 
+type RedisConfig struct {
+	Host    string
+	Port    int
+	Cluster string
+}
+
 type Config struct {
 	Debug    bool
 	PspaceDb DbConfig
+	Redis    RedisConfig
 }
 
 func init() {

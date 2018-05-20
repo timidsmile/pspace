@@ -1,39 +1,59 @@
 package session
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/timidsmile/pspace/model"
+	"github.com/timidsmile/pspace/components"
 	"github.com/timidsmile/pspace/service"
 	"net/http"
+	"time"
 )
 
 func LoginAction(c *gin.Context) {
-	value, exist := c.GetQuery("key")
+	response := components.NewResponse()
+	defer c.JSON(http.StatusOK, response)
+
+	userName, exist := c.GetPostForm("userName")
 	if !exist {
-		value = "master"
+		response.Code = 1
+		response.Msg = "请输入用户名!"
+		return
 	}
 
-	s := service.UserBasicService{}
-	ret := s.GetByUserID(123)
-
-	fmt.Println(ret)
-
-	if ret == nil {
-		user := &model.UserBasic{
-			UserID:    123,
-			UserName:  "test",
-			Mobile:    "test",
-			Email:     "test",
-			Passwd:    "test",
-			NickName:  "test",
-			AvatarUrl: "test",
-			Status:    1,
-		}
-
-		s.CreateUser(user)
-
+	// 使用userName登陆
+	userServ := service.UserBasicService{}
+	curUser := userServ.GetByUserName(userName)
+	if curUser == nil {
+		response.Code = 1
+		response.Msg = "用户不存在!"
+		return
 	}
-	c.Data(http.StatusOK, "text/plain", []byte(fmt.Sprintf("goodbye %s !\n", value)))
+
+	// 验证密码是否正确
+	passwd, exist := c.GetPostForm("passwd")
+	if !exist {
+		response.Code = 1
+		response.Msg = "请输入密码!"
+		return
+	}
+
+	if passwd != curUser.Passwd {
+		response.Code = 1
+		response.Msg = "密码不正确!"
+		return
+	}
+
+	// 登陆成功，记录session
+	userID := curUser.UserID
+
+	cur := time.Now()
+	timestamp := int64(cur.UnixNano() / 1000000000) //UnitNano获取的是纳秒，除以1000000获取秒级的时间戳
+
+	userSession := components.Session{
+		UserID:    userID,
+		LoginTime: timestamp,
+	}
+
+	userSession.Save()
+
 	return
 }
