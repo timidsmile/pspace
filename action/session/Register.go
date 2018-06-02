@@ -12,6 +12,7 @@ import (
 
 func RegisterAction(c *gin.Context) {
 	response := components.NewResponse()
+	c.Header("Access-Control-Allow-Origin", "*")
 	defer c.JSON(http.StatusOK, response)
 
 	// 使用用户名注册方式

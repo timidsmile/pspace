@@ -7,6 +7,8 @@ import (
 )
 
 func WelcomeAction(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	value, exist := c.GetQuery("key")
 	if !exist {
 		value = "master!"
