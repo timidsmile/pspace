@@ -8,11 +8,15 @@ import (
 	"github.com/timidsmile/pspace/action/passport"
 	"github.com/timidsmile/pspace/action/session"
 	"github.com/timidsmile/pspace/action/test"
+	"github.com/timidsmile/pspace/middleware"
 )
 
 func LoadRouters() *gin.Engine {
 	router := gin.New()
 	router.Use(gin.Recovery())
+	router.Use(middleware.CheckLogin)
+
+	fmt.Println("after midware")
 
 	router.HTMLRender = pongo2gin.New(
 		pongo2gin.RenderOptions{
@@ -49,6 +53,7 @@ func LoadRouters() *gin.Engine {
 	passportGroup := router.Group("/passport")
 	{
 		passportGroup.POST("/setting", passport.SettingAction)
+		passportGroup.POST("/getUserInfo", passport.GetUserInfoAction)
 	}
 
 	return router
