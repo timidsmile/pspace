@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/robvdl/pongo2gin"
+	"github.com/timidsmile/pspace/action/common"
 	"github.com/timidsmile/pspace/action/index"
 	"github.com/timidsmile/pspace/action/passport"
 	"github.com/timidsmile/pspace/action/session"
@@ -49,8 +50,15 @@ func LoadRouters() *gin.Engine {
 	// passport 模块
 	passportGroup := router.Group("/api/passport").Use(middleware.CheckLogin)
 	{
-		passportGroup.GET("/setting", passport.SettingAction)
+		passportGroup.POST("/setting", passport.SettingAction)
 		passportGroup.GET("/getUserInfo", passport.GetUserInfoAction)
+	}
+
+	// 公共服务 模块
+	commonGroup := router.Group("/api/common")
+	{
+		commonGroup.POST("/uploadFile", common.UploadFileAction)
+		commonGroup.POST("/uploadAvatarImage", common.UploadAvartarImageAction)
 	}
 
 	return router
