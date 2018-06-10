@@ -16,20 +16,21 @@ type Session struct {
 	LoginTime int64 // 登陆时间
 }
 
-func (s *Session) Save() error {
+func (s *Session) Save() (string, error) {
 	accessToken := s.genAccessToken()
 
 	sessionVal := strconv.FormatInt(s.UserID, 10) + "-" + strconv.FormatInt(s.LoginTime, 10)
 
+	fmt.Println("session key: ", accessToken)
 	fmt.Println("session value: ", sessionVal)
 
 	err := SetEx(accessToken, sessionVal, TTL_SESSION)
 	if err != nil {
 		fmt.Println("save token failed!")
-		return err
+		return "", err
 	}
 
-	return nil
+	return accessToken, nil
 }
 
 func (s *Session) Get(accessToken string) *Session {
@@ -43,6 +44,7 @@ func (s *Session) Get(accessToken string) *Session {
 
 	if len(arr) != 2 {
 		fmt.Println("invalid token!")
+		return nil
 	}
 
 	userID, _ := strconv.ParseInt(arr[0], 10, 64)

@@ -14,9 +14,6 @@ import (
 func LoadRouters() *gin.Engine {
 	router := gin.New()
 	router.Use(gin.Recovery())
-	router.Use(middleware.CheckLogin)
-
-	fmt.Println("after midware")
 
 	router.HTMLRender = pongo2gin.New(
 		pongo2gin.RenderOptions{
@@ -28,7 +25,7 @@ func LoadRouters() *gin.Engine {
 	fmt.Println(router.HTMLRender)
 
 	// 测试
-	testGroup := router.Group("/test")
+	testGroup := router.Group("/api/test")
 	{
 		testGroup.GET("/welcome", test.WelcomeAction)
 		testGroup.GET("/goodbye", test.GoodbyeAction)
@@ -36,13 +33,13 @@ func LoadRouters() *gin.Engine {
 	}
 
 	// 首页
-	indexGroup := router.Group("/")
+	indexGroup := router.Group("/api")
 	{
 		indexGroup.GET("/", index.IndexAction)
 	}
 
 	// session 模块
-	sessionsGroup := router.Group("/session")
+	sessionsGroup := router.Group("/api/session")
 	{
 		sessionsGroup.POST("/register", session.RegisterAction)
 		sessionsGroup.POST("/login", session.LoginAction)
@@ -50,10 +47,10 @@ func LoadRouters() *gin.Engine {
 	}
 
 	// passport 模块
-	passportGroup := router.Group("/passport")
+	passportGroup := router.Group("/api/passport").Use(middleware.CheckLogin)
 	{
-		passportGroup.POST("/setting", passport.SettingAction)
-		passportGroup.POST("/getUserInfo", passport.GetUserInfoAction)
+		passportGroup.GET("/setting", passport.SettingAction)
+		passportGroup.GET("/getUserInfo", passport.GetUserInfoAction)
 	}
 
 	return router

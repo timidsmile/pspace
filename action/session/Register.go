@@ -8,6 +8,7 @@ import (
 	"github.com/timidsmile/pspace/model"
 	"github.com/timidsmile/pspace/service"
 	"net/http"
+	"time"
 )
 
 func RegisterAction(c *gin.Context) {
@@ -91,6 +92,20 @@ func RegisterAction(c *gin.Context) {
 		response.Code = 1
 		response.Msg = err.Error()
 	}
+
+	// set session
+	cur := time.Now()
+	timestamp := int64(cur.UnixNano() / 1000000000) //UnitNano获取的是纳秒，除以1000000获取秒级的时间戳
+	userSession := components.Session{
+		UserID:    userID,
+		LoginTime: timestamp,
+	}
+
+	token, _ := userSession.Save()
+
+	c.SetCookie("token", token, 1111111111111111, "/", "www.pspace.com", true, true)
+
+	c.String(http.StatusOK, "register successful")
 
 	return
 }

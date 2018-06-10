@@ -1,28 +1,25 @@
 package passport
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/timidsmile/pspace/components"
-	"net/http"
 	"github.com/timidsmile/pspace/service"
-	"strconv"
-	"fmt"
+	"net/http"
 )
 
 func GetUserInfoAction(c *gin.Context) {
-	fmt.Println("in getU")
 	response := components.NewResponse()
-	c.Header("Access-Control-Allow-Origin", "*")
+	c.Header("Access-Control-Allow-Origin", "http://www.pspace.com")
 	defer c.JSON(http.StatusOK, response)
 
 	// 直接从表单中取数据形式获取参数
-	userIdStr := c.PostForm("userID")
-
-	userID, _ := strconv.ParseInt(userIdStr, 10, 64)
+	userID := c.MustGet("userID").(int64)
+	fmt.Println(userID)
 
 	userServ := service.UserBasicService{}
 	userBasic := userServ.GetByUserID(userID)
 
-	response.Data = userBasic;
+	response.Data = userBasic
 	return
 }

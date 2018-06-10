@@ -1,7 +1,6 @@
 package components
 
 import (
-	"fmt"
 	"regexp"
 )
 
@@ -57,6 +56,5 @@ func (obj UserNameValidate) Validate(userName interface{}) bool {
 		result = reg.MatchString(userNameStr)
 	}
 
-	fmt.Println("user name is not ok!")
 	return result
 }
