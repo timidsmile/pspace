@@ -2,8 +2,8 @@ package service
 
 import (
 	"github.com/timidsmile/pspace/components"
-	"sync"
 	"github.com/timidsmile/pspace/model"
+	"sync"
 )
 
 type userBasicService struct {

@@ -2,9 +2,9 @@ package components
 
 import (
 	"fmt"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"github.com/timidsmile/pspace/setting"
-	_ "github.com/go-sql-driver/mysql"
 )
 
 var (

@@ -1,9 +1,9 @@
 package test
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"fmt"
 )
 
 func GoodbyeAction(c *gin.Context) {

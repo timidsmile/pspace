@@ -1,12 +1,12 @@
 package router
 
 import (
-	"github.com/timidsmile/pspace/action/test"
-	"github.com/timidsmile/pspace/action/session"
 	"github.com/gin-gonic/gin"
+	"github.com/timidsmile/pspace/action/session"
+	"github.com/timidsmile/pspace/action/test"
 )
 
-func LoadRouters() *gin.Engine{
+func LoadRouters() *gin.Engine {
 
 	router := gin.New()
 	router.Use(gin.Recovery())
@@ -25,5 +25,5 @@ func LoadRouters() *gin.Engine{
 		sessions.GET("/login", session.LoginAction)
 	}
 
-	return router;
+	return router
 }

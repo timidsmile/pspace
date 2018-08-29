@@ -1,9 +1,9 @@
 package session
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"fmt"
 )
 
 func RegisterAction(c *gin.Context) {
