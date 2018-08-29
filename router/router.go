@@ -2,6 +2,7 @@ package router
 
 import (
 	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"github.com/robvdl/pongo2gin"
 	"github.com/timidsmile/pspace/action/common"

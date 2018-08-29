@@ -2,9 +2,10 @@ package common
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/timidsmile/pspace/components"
-	"net/http"
 )
 
 func UploadFileAction(c *gin.Context) {

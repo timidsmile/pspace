@@ -1,10 +1,11 @@
 package session
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/timidsmile/pspace/components"
 	"github.com/timidsmile/pspace/service"
-	"net/http"
 )
 
 func CheckLoginAction(c *gin.Context) {

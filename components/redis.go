@@ -2,6 +2,7 @@ package components
 
 import (
 	"fmt"
+
 	"github.com/gomodule/redigo/redis"
 	"github.com/timidsmile/pspace/setting"
 )

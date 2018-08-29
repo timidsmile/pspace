@@ -2,11 +2,12 @@ package passport
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/timidsmile/pspace/components"
 	"github.com/timidsmile/pspace/model"
 	"github.com/timidsmile/pspace/service"
-	"net/http"
 )
 
 func SettingAction(c *gin.Context) {
@@ -23,7 +24,7 @@ func SettingAction(c *gin.Context) {
 		NickName  string `form:"nickName"`
 		AvatarUrl string `form:"avatarUrl"`
 	}{
-	// Mobile: "123456", // 赋默认值情形
+		// Mobile: "123456", // 赋默认值情形
 	}
 
 	fmt.Println(params.NickName)

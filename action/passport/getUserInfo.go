@@ -2,10 +2,11 @@ package passport
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/timidsmile/pspace/components"
 	"github.com/timidsmile/pspace/service"
-	"net/http"
 )
 
 func GetUserInfoAction(c *gin.Context) {

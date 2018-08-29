@@ -2,9 +2,10 @@ package setting
 
 import (
 	"fmt"
-	"github.com/BurntSushi/toml"
 	"path/filepath"
 	"sync"
+
+	"github.com/BurntSushi/toml"
 )
 
 var (

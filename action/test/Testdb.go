@@ -2,11 +2,12 @@ package test
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql" // mysql 驱动
 	"github.com/timidsmile/pspace/components"
 	"github.com/timidsmile/pspace/model"
-	"net/http"
 )
 
 func TestdbAction(c *gin.Context) {

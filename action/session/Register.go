@@ -2,13 +2,14 @@ package session
 
 import (
 	"fmt"
+	"net/http"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/timidsmile/pspace/components"
 	"github.com/timidsmile/pspace/consts"
 	"github.com/timidsmile/pspace/model"
 	"github.com/timidsmile/pspace/service"
-	"net/http"
-	"time"
 )
 
 func RegisterAction(c *gin.Context) {

@@ -2,11 +2,12 @@ package common
 
 import (
 	"fmt"
+	"net/http"
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 	"github.com/timidsmile/pspace/components"
 	"github.com/timidsmile/pspace/consts"
-	"net/http"
-	"strconv"
 )
 
 func UploadAvartarImageAction(c *gin.Context) {
