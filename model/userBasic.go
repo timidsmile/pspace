@@ -1,7 +1,7 @@
 package model
 
 type User struct {
-	BasicMdl
+	Basic
 	UserID    string `gorm:"size:32 column:user_id" json:"userID"`
 	UserName  string `gorm:"size:32 column:user_name" json:"userName"`
 	mobile    string `gorm:"size:32" json:"mobile"`
